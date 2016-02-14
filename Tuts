@@ -16,3 +16,20 @@ gem install compass
 
 Updating components:
 gem update
+
+
+Adding git
+
+git init
+
+git add . 
+
+git commit -m "First commit"
+
+git 
+
+Installing gulp on two way - --save or --save-dev (different is that --save-dev is what the project need for developing, but not wor production). Run command in root folder
+
+npm install --save-dev gulp
+
+then make file "gulpfile.js"
