@@ -1,0 +1,10 @@
+{
+  "name": "learninggulp",
+  "version": "0.0.1",
+  "description": "Learning gulp git and browserify",
+  "repository": {
+    "type": "git",
+    "url": "?.git"
+  },
+  "author": "Vladimir Prsendic"
+}
