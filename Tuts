@@ -33,3 +33,25 @@ Installing gulp on two way - --save or --save-dev (different is that --save-dev 
 npm install --save-dev gulp
 
 then make file "gulpfile.js"
+
+Then make variable where we will require gulp
+
+var gulp = require('gulp')
+
+Then install new gulp plagin
+
+npm install --save-dev gulp-util
+
+add it to gulpfile.js
+
+var gutil = require('gulp-util');
+
+and make new task
+
+gulp.task('log', function(){    					// 'log' is the name of the task
+	gutil.log('Some text to log in console')
+});
+
+To run task in commandline, we type:
+
+gulp log
