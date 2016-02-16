@@ -3,6 +3,7 @@ var gutil = require('gulp-util'); //alow logs in terminal
 var coffee = require('gulp-coffee'); 
 var concat = require('gulp-concat'); //join all files into one file
 var browserify = require('gulp-browserify');
+var compass = require('gulp-compass');
 
 var coffeeSources = ['components/coffee/tagline.coffee'];
 var jsSources = [
@@ -11,7 +12,9 @@ var jsSources = [
 	'components/scripts/tagline.js',
 	'components/scripts/template.js'
 ];
+var sassSources = ['components/sass/style.scss'];
 
+//npm install --save-dev gulp-util - for logs in termninal
 gulp.task('coffee',function(){
 	gulp.src(coffeeSources)
 		.pipe(coffee({ bare:true })
@@ -24,4 +27,17 @@ gulp.task('js',function(){
 		.pipe(concat('script.js'))
 		.pipe(browserify())
 		.pipe(gulp.dest('builds/development/js'))
+})
+
+
+//npm install --save-dev gulp-compass
+gulp.task('compass',function(){
+	gulp.src(sassSources)
+		.pipe(compass({
+			sass: 'components/sass',
+			image: 'builds/development/images',
+			style: 'expanded'
+		}))
+			.on('error',gutil.log) 
+		.pipe(gulp.dest('builds/development/css'))
 })
