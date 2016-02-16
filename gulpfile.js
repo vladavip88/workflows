@@ -4,6 +4,8 @@ var coffee = require('gulp-coffee');
 var concat = require('gulp-concat'); //join all files into one file
 var browserify = require('gulp-browserify');
 var compass = require('gulp-compass');
+var connect = require('gulp-connect');
+
 
 var coffeeSources = ['components/coffee/tagline.coffee'];
 var jsSources = [
@@ -13,6 +15,8 @@ var jsSources = [
 	'components/scripts/template.js'
 ];
 var sassSources = ['components/sass/style.scss'];
+var htmlSources = ['builds/development/*.html'];
+var jsonSources = ['builds/development/js/*.json']
 
 //npm install --save-dev gulp-util - for logs in termninal
 gulp.task('coffee',function(){
@@ -27,6 +31,7 @@ gulp.task('js',function(){
 		.pipe(concat('script.js'))
 		.pipe(browserify())
 		.pipe(gulp.dest('builds/development/js'))
+		.pipe(connect.reload())
 })
 
 
@@ -40,4 +45,32 @@ gulp.task('compass',function(){
 		}))
 			.on('error',gutil.log) 
 		.pipe(gulp.dest('builds/development/css'))
+		.pipe(connect.reload())
 })
+
+gulp.task('connect',function(){
+	connect.server({
+		root: 'builds/development/',
+		livereload: true
+	});
+});
+
+gulp.task('html',function(){
+	gulp.src(htmlSources)
+	.pipe(connect.reload())
+});
+
+gulp.task('json',function(){
+	gulp.src(jsonSources)
+	.pipe(connect.reload())
+});
+
+gulp.task('watch', function(){
+	gulp.watch(coffeeSources,['coffee']); //first parameter is what to watch, second id which task to run 
+	gulp.watch(jsSources,['js']);
+	gulp.watch('components/sass/*.scss',['compass']);
+	gulp.watch(htmlSources,['html']);
+	gulp.watch(jsonSources,['json']);
+});
+
+gulp.task('default',['json','html','coffee','js','compass', 'connect','watch']);
